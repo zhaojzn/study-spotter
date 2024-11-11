@@ -4,28 +4,19 @@ import AccessibilitySection from "./AccessibilitySection";
 import CommentSection from "./CommentSection";
 import LimitationsSection from "./LimitationsSection";
 import RatingSection from "./RatingSection";
-import { db, GeoPoint } from '../../firebase'; // Import GeoPoint
+import { db } from '../../firebase';
 import { collection, addDoc } from 'firebase/firestore';
 
 const ReviewPage = ({ closeModal }) => {
-  const [location, setLocation] = useState(null); // Location will store lat and lng as a plain object
+  const [location, setLocation] = useState(""); // Store as a string
   const [accessibilityOptions, setAccessibilityOptions] = useState([]);
   const [comments, setComments] = useState("");
   const [limitationsOptions, setLimitationsOptions] = useState([]);
   const [ratings, setRatings] = useState({});
 
   const handleSubmit = async () => {
-    if (!location) {
-      alert("Please select a location before submitting.");
-      return;
-    }
-
-    // Convert the location to a GeoPoint
-    const locationGeoPoint = new GeoPoint(location.lat, location.lng);
-
-    // Structure the review data
     const reviewData = {
-      location: locationGeoPoint, // Use GeoPoint for Firestore
+      location, // This will be the formatted string
       accessibilityOptions,
       comments,
       limitationsOptions,
@@ -39,7 +30,7 @@ const ReviewPage = ({ closeModal }) => {
       const reviewsCollection = collection(db, "reviews");
       await addDoc(reviewsCollection, reviewData);
       alert("Review submitted successfully!");
-      closeModal(); // Close the modal after submission
+      closeModal();
     } catch (error) {
       console.error("Error submitting review:", error);
       alert(`Failed to submit review. Error: ${error.message || 'Unknown error'}`);
