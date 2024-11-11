@@ -29,7 +29,6 @@ const ReviewPage = ({ closeModal }) => {
     try {
       const reviewsCollection = collection(db, "reviews");
       await addDoc(reviewsCollection, reviewData);
-      alert("Review submitted successfully!");
       closeModal();
     } catch (error) {
       console.error("Error submitting review:", error);
