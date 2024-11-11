@@ -28,7 +28,6 @@ const PhotoUpload = () => {
         style={{ backgroundColor: "#EBE1DA" }}  // Set background color to #EBE1DA
       >
         <span>Add files</span>
-        {/* Use the imported cloud image here */}
         <img
           loading="lazy"
           src={cloudImage} // Use your own image
@@ -62,7 +61,7 @@ const PhotoUpload = () => {
                   className="ml-2 text-[#BD4545] hover:text-[#BD4545] transition-colors"
                   aria-label={`Delete ${file.name}`}
                 >
-                  ✕
+                  Delete
                 </button>
               </li>
             ))}

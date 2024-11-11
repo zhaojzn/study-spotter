@@ -2,3 +2,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.pac-container {
+    width: 80% !important; /* Match the width of the input container */
+    max-width: 450px; /* Adjust this value to your preferred width */
+    box-sizing: border-box;
+    z-index: 1000; /* Ensure it appears above other elements */
+  }
+
+  body {
+    overflow: hidden;
+  }

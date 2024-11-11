@@ -2,52 +2,34 @@ import { useState } from "react";
 import starUncoloured from "../../assets/star-uncoloured.svg";
 import starColoured from "../../assets/star-coloured.svg";
 
-const ratingItems = [
-  {
-    label: "Outlets",
-    imageSrc: starUncoloured,
-    activeImageSrc: starColoured,
-  },
-  {
-    label: "Quietness",
-    imageSrc: starUncoloured,
-    activeImageSrc: starColoured,
-  },
-  {
-    label: "Atmosphere",
-    imageSrc: starUncoloured,
-    activeImageSrc: starColoured,
-  },
-  {
-    label: "Seating availability",
-    imageSrc: starUncoloured,
-    activeImageSrc: starColoured,
-  },
-];
+const RatingSection = ({ onRatingChange }) => {
+  const [ratings, setRatings] = useState({
+    Outlets: 0,
+    Quietness: 0,
+    Atmosphere: 0,
+    "Seating availability": 0,
+  });
 
-const RatingSection = () => {
-  const [ratings, setRatings] = useState(Array(ratingItems.length).fill(0));
-
-  const handleStarClick = (itemIndex, starIndex) => {
-    const newRatings = [...ratings];
-    newRatings[itemIndex] = starIndex + 1; // Update rating for this item
+  const handleStarClick = (item, rating) => {
+    const newRatings = { ...ratings, [item]: rating };
     setRatings(newRatings);
+    onRatingChange(newRatings);
   };
 
   return (
     <section className="self-stretch max-md:max-w-full">
       <div className="flex flex-col gap-5 max-md:flex-col">
-        {ratingItems.map((item, itemIndex) => (
-          <div key={itemIndex} className="flex items-center justify-between gap-3 mt-5">
-            <span className="text-2xl text-zinc-800">{item.label}</span>
-            <div className="flex gap-2 justify-end"> {/* gap-2 adds spacing between stars */}
-              {[...Array(5)].map((_, starIndex) => (
+        {Object.keys(ratings).map((item) => (
+          <div key={item} className="flex items-center justify-between gap-3 mt-5">
+            <span className="text-2xl text-zinc-800">{item}</span>
+            <div className="flex gap-2">
+              {[1, 2, 3, 4, 5].map(star => (
                 <img
-                  key={starIndex}
-                  src={starIndex < ratings[itemIndex] ? item.activeImageSrc : item.imageSrc}
-                  alt={`${starIndex + 1} star`}
+                  key={star}
+                  src={star <= ratings[item] ? starColoured : starUncoloured}
                   className="w-9 h-9 cursor-pointer"
-                  onClick={() => handleStarClick(itemIndex, starIndex)}
+                  onClick={() => handleStarClick(item, star)}
+                  alt={`${star} star`}
                 />
               ))}
             </div>

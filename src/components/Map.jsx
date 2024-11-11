@@ -22,7 +22,7 @@ const Map = ({ studySpots, onMarkerClick, initialCenter, initialZoom, selectedSp
           map: mapInstance.current,
           title: spot.name,
         });
-
+        
         // Add click listener to each marker
         marker.addListener("click", () => {
           if (onMarkerClick) {
@@ -46,7 +46,7 @@ const Map = ({ studySpots, onMarkerClick, initialCenter, initialZoom, selectedSp
     }
   }, [selectedSpot]);
 
-  return <div ref={mapRef} className="w-full h-96" />;
+  return <div ref={mapRef} className="w-full h-full" />;
 };
 
 export default Map;
